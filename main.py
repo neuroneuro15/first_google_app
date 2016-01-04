@@ -14,16 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from google.appengine.ext import ndb
 import webapp2
 import logging
 import os
 import jinja2
+from models.greetings import Greetings
 
-class Greetings(ndb.Model):
-    name = ndb.StringProperty(required=True)
-    message = ndb.TextProperty(required=True)
-    timestamp = ndb.DateTimeProperty(auto_now_add=True)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
