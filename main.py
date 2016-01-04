@@ -17,6 +17,8 @@
 from google.appengine.ext import ndb
 import webapp2
 import logging
+import os
+import jinja2
 
 class Greetings(ndb.Model):
     name = ndb.StringProperty(required=True)
@@ -25,31 +27,23 @@ class Greetings(ndb.Model):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        html = """
-        <html>
-        <head></head>
-        <body>
 
-        <h1>My Guest Book</h1>
+        # Get all past Greetings from the datastore
+        results = Greetings.query().fetch()  # Can put an integer argument in fetch() to limit to N number of results
+        results_dict = {'greetings': results}
 
-        <form action="/greet" method="post">
-            <p>
-            Name: <input type="text" name="user_name" style="width: 300px">
-            </p>
-            <p>
-            Message: <textarea name="message" style="width: 300px" rows="5"></textarea>
-            </p>
-            <p>
-            <input type="submit" value="Send">
-            </p>
-        </form>
-        """
 
-        html += """
-        </body>
-        </html> """
+        # HTML Template
+        template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 
-        self.response.write(html)
+        jinja_environment = jinja2.Environment(
+            loader=jinja2.FileSystemLoader(template_dir)
+        )
+
+        template = jinja_environment.get_template('home.html')
+        rendered_template = template.render(results_dict)
+
+        self.response.write(rendered_template)
 
 
 class GreetHandler(webapp2.RequestHandler):
