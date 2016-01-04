@@ -7,4 +7,4 @@ The first app I've worked on while learning the Google App Engine with Python by
   - Jinja2 Template Engine
   - Source File Directory Organization
 
-I greatly reccomend it, and hope you enjoy it as much as I did! :-)
+I greatly recommend it, and hope you enjoy it as much as I did! :-)
