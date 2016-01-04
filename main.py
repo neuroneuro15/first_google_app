@@ -53,7 +53,4 @@ class GreetHandler(webapp2.RequestHandler):
         logging.debug("POST Successful")
 
 
-app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/greet', GreetHandler)
-], debug=True)
+
