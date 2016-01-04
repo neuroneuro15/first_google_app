@@ -25,7 +25,7 @@ class Greetings(ndb.Model):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write("""
+        html = """
         <html>
         <head></head>
         <body>
@@ -43,10 +43,13 @@ class MainHandler(webapp2.RequestHandler):
             <input type="submit" value="Send">
             </p>
         </form>
+        """
 
+        html += """
         </body>
-        </html>
-        """)
+        </html> """
+
+        self.response.write(html)
 
 
 class GreetHandler(webapp2.RequestHandler):
@@ -57,6 +60,7 @@ class GreetHandler(webapp2.RequestHandler):
 
         logging.debug("Message: \n\tUser Name: {}\n\tMessage: {}\n".format(user_name, message))
         Greetings(name=user_name, message=message).put()
+        logging.debug("POST Successful")
 
 
 app = webapp2.WSGIApplication([
